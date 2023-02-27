@@ -30,8 +30,7 @@ class SheetDialogFragment: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.tvDescription.text = arguments?.getString("DESCRIPTION")
-//        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        setStyle(DialogFragment.STYLE_NO_FRAME, R.drawable.back_for_sheet_dialog)
+
     }
 
 }
