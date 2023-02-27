@@ -35,6 +35,73 @@ class AddingSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        auth = FirebaseAuth.getInstance()
+        database = Firebase.database.reference
+        val movie = arguments?.getSerializable("MOVIE") as MoviesFirebase
+        CoroutineScope(Dispatchers.IO).launch {
+
+            var megaStatus = true
+            runBlocking {
+                database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
+                    .addOnSuccessListener {
+                        it.children.forEach { data ->
+                            if (data.key.toString() == movie.id) {
+                                megaStatus = false
+                            }
+                        }
+                    }
+            }
+
+            binding.btnYes.setOnClickListener {
+                if (auth.currentUser != null) {
+//                    if (megaStatus) {
+                    if (movie.backdrop !== null) {
+                        database.child(
+                            auth.currentUser?.email.toString().substringBefore("@")
+                        )
+                            .child(movie.id).setValue(
+                                MoviesFirebase(
+                                    movie.id,
+                                    movie.name,
+                                    movie.poster,
+                                    movie.backdrop
+                                )
+                            ).addOnSuccessListener {
+                                dialog?.dismiss()
+                            }
+                    } else {
+                        database.child(
+                            auth.currentUser?.email.toString().substringBefore("@")
+                        )
+                            .child(movie.id).setValue(
+                                MoviesFirebase(
+                                    movie.id,
+                                    movie.name,
+                                    movie.poster,
+                                    ""
+                                )
+                            ).addOnSuccessListener {
+                                dialog?.dismiss()
+                            }
+                    }
+//                    }
+                } else {
+                    Toast.makeText(context, "Войдите в аккаунт!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            binding.btnNo.setOnClickListener {
+                database.child(
+                    auth.currentUser?.email.toString().substringBefore("@")
+                ).get()
+                    .addOnSuccessListener {
+                        it.child(movie.id).ref.removeValue()
+                            .addOnSuccessListener {
+
+                            }
+                    }
+                dialog?.dismiss()
+            }
+        }
 
     }
 
