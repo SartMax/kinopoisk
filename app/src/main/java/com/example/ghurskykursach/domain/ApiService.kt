@@ -8,7 +8,12 @@ import retrofit2.http.Query
 
 interface ApiService {
 
+    @GET("movie?token=HB6B6RM-2VC45QY-KY7D7BE-GRVSZX4&field=id")
+    suspend fun getMovieById(
+        @Query("search") id: Int
+    ): Response<DocsById>
 
     @GET("movie?token=HB6B6RM-2VC45QY-KY7D7BE-GRVSZX4&field=year&search=2021&page=25&limit=100")
     suspend fun getMovie():Response<Films>
+
 }
