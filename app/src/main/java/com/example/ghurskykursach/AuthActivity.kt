@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
+
     private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
     private var status = true
