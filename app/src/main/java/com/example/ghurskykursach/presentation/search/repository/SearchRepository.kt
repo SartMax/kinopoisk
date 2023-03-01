@@ -6,4 +6,7 @@ import com.example.ghurskykursach.domain.response_by_id.DocsById
 
 class SearchRepository(private val retrofit: ApiService)  {
 
+    suspend fun getMovieByName(name: String): Films? {
+        return retrofit.getMovieByName(name).body()
+    }
 }

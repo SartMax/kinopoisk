@@ -1,14 +1,19 @@
 package com.example.ghurskykursach.presentation.movie
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +45,8 @@ class MovieDescriptionFragment : Fragment(){
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.reference
@@ -70,6 +77,31 @@ class MovieDescriptionFragment : Fragment(){
                 Log.e("Error", e.message.toString() )
             }
 
+            binding.tvMovieName.text = movie.name
+            binding.tvMovieLength.text = "Длина фильма: ${movie.movieLength} мин"
+
+            binding.tvDescription.text = movie.description
+            binding.tvBudget.text = movie.budget?.value.toString()
+            binding.tvBudgetWorld.text = movie.fees?.world?.value.toString()
+            binding.tvRating.text = movie.rating?.kp.toString()
+
+            val resource: Resources = resources
+            val green = resource.getColor(R.color.green, null)
+            val red = resource.getColor(org.koin.android.R.color.error_color_material_dark, null)
+            if (movie.rating?.kp!! >= 7.0){
+                binding.tvRating.setTextColor(green)
+            }
+            if(movie.rating.kp < 7.0 && movie.rating.kp >= 5.0){
+                binding.tvRating.setTextColor(R.color.white)
+            }
+            if (movie.rating.kp < 5.0){
+                binding.tvRating.setTextColor(red)
+            }
+            binding.tvVotes.text = movie.votes?.kp.toString() + " оценок"
+            val adapter = MovieDescriptionAdapter(movie?.persons!!)
+            binding.rvActors.layoutManager = GridLayoutManager(context, 5, GridLayoutManager.HORIZONTAL, false)
+            binding.rvActors.adapter = adapter
+
             binding.btnBack.setOnClickListener {
                 Navigation.findNavController(binding.root).popBackStack()
             }
@@ -82,10 +114,6 @@ class MovieDescriptionFragment : Fragment(){
 
                 Navigation.findNavController(binding.root).navigate(R.id.action_movieDescriptionFragment_to_addingSheetDialogFragment, bundle)
             }
-            binding.tvMovieName.text = movie.name
-            binding.tvBudget.text = movie.budget?.value.toString()
-            binding.tvBudgetWorld.text = movie.fees?.world?.value.toString()
-
 
             movieViewModel.commentsList.observe(viewLifecycleOwner){ commentList->
                 val commentsAdapter = CommentsAdapter(commentList)
