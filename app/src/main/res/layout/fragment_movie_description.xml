@@ -298,24 +298,38 @@
 
                 </LinearLayout>
 
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_margin="20dp"-->
+<!--                    android:gravity="center">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/btn_YouTube"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Смотреть трейлер!"-->
+<!--                        android:background="@drawable/back_watch_trailer"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:textSize="20sp"-->
+<!--                        />-->
+
+<!--                </LinearLayout>-->
                 <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="20dp"
-                    android:gravity="center">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
-                    <TextView
-                        android:id="@+id/btn_YouTube"
-                        android:layout_width="wrap_content"
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        android:id="@+id/youtube_player_view"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Смотреть трейлер!"
-                        android:background="@drawable/back_watch_trailer"
-                        android:textColor="@color/black"
-                        android:padding="10dp"
-                        android:textSize="20sp"
-                        />
-
+                        app:videoId="S0Q4gqBUs7c"
+                        app:autoPlay="true" />
                 </LinearLayout>
 
                 <LinearLayout

@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
 }
-
+apply plugin: 'kotlin-android-extensions'
 android {
     namespace 'com.example.ghurskykursach'
     compileSdk 33
@@ -48,6 +48,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
     implementation files('libs\\YouTubeAndroidPlayerApi-1.2.2')
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

@@ -1,19 +1,15 @@
 package com.example.ghurskykursach.presentation.movie
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.res.Resources
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,9 +21,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import kotlinx.android.synthetic.main.fragment_movie_description.*
 import org.koin.android.ext.android.inject
 
-//import com.example.ghurskykursach.presentation.movie.youtube.YoutubeActivity
 
 class MovieDescriptionFragment : Fragment(){
 
@@ -114,6 +111,9 @@ class MovieDescriptionFragment : Fragment(){
 
                 Navigation.findNavController(binding.root).navigate(R.id.action_movieDescriptionFragment_to_addingSheetDialogFragment, bundle)
             }
+
+            lifecycle.addObserver(binding.youtubePlayerView)
+
 
             movieViewModel.commentsList.observe(viewLifecycleOwner){ commentList->
                 val commentsAdapter = CommentsAdapter(commentList)
