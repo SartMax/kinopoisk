@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -21,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import kotlinx.android.synthetic.main.fragment_movie_description.*
 import org.koin.android.ext.android.inject
@@ -113,7 +116,17 @@ class MovieDescriptionFragment : Fragment(){
             }
 
             lifecycle.addObserver(binding.youtubePlayerView)
-
+            binding.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    val videoId =
+                        movie.videos?.trailers?.get(0)?.url?.substring(30)
+                    if (videoId != null) {
+                        println(videoId)
+                        youTubePlayer.loadVideo(videoId, 0F)
+                        youTubePlayer.pause()
+                    }
+                }
+            })
 
             movieViewModel.commentsList.observe(viewLifecycleOwner){ commentList->
                 val commentsAdapter = CommentsAdapter(commentList)
