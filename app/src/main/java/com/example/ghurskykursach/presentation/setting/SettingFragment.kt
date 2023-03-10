@@ -36,5 +36,7 @@ class SettingFragment : Fragment() {
             startActivity(intent)
         }
 
+//        binding.btnHelpMe
+
     }
 }
