@@ -38,10 +38,17 @@ class SettingFragment : Fragment() {
         }
 
         binding.btnHelpMe.setOnClickListener {
-            try{
+            val baseLink = try {
+                requireContext().packageManager.getPackageInfo("org.telegram.messenger", 0)
+                "tg://"
+            } catch (_: Exception) {
+                "https://t.me/"
+            }
+
+            try {
                 val urlIntent = Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("https://t.me//meteostation13luban_bot")
+                    Uri.parse(baseLink + "meteostation13luban_bot")
                 )
                 context?.startActivity(urlIntent)
             } catch (_: Exception) {}
