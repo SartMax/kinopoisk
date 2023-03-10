@@ -17,15 +17,14 @@
         android:id="@+id/tv_RegistrationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="40dp"
-        android:textColor="#000"
-        android:layout_marginStart="10dp"
-        android:textSize="30sp"
         android:text="Регистрация"
+        android:textColor="#000"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
 
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_Login"
