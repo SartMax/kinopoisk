@@ -1,6 +1,7 @@
 package com.example.ghurskykursach.presentation.setting
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +37,15 @@ class SettingFragment : Fragment() {
             startActivity(intent)
         }
 
-//        binding.btnHelpMe
+        binding.btnHelpMe.setOnClickListener {
+            try{
+                val urlIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://t.me//meteostation13luban_bot")
+                )
+                context?.startActivity(urlIntent)
+            } catch (_: Exception) {}
+        }
 
     }
 }
