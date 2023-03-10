@@ -1,6 +1,7 @@
 package com.example.ghurskykursach.presentation.setting
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,23 @@ class SettingFragment : Fragment() {
             auth.signOut()
             var intent = Intent(context, AuthActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.btnHelpMe.setOnClickListener {
+            val baseLink = try {
+                requireContext().packageManager.getPackageInfo("org.telegram.messenger", 0)
+                "tg://"
+            } catch (_: Exception) {
+                "https://t.me/"
+            }
+
+            try {
+                val urlIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(baseLink + "meteostation13luban_bot")
+                )
+                context?.startActivity(urlIntent)
+            } catch (_: Exception) {}
         }
 
     }

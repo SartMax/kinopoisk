@@ -3,6 +3,7 @@ package com.example.ghurskykursach
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -40,6 +41,23 @@ class AuthActivity : AppCompatActivity() {
                 navController.navigate(R.id.action_registrationFragment_to_loginFragment)
                 status = true
             }
+        }
+
+        binding.btnHelpMe.setOnClickListener {
+            val baseLink = try {
+                packageManager.getPackageInfo("org.telegram.messenger", 0)
+                "tg://"
+            } catch (_: Exception) {
+                "https://t.me/"
+            }
+
+            try {
+                val urlIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(baseLink + "meteostation13luban_bot")
+                )
+                startActivity(urlIntent)
+            } catch (_: Exception) {}
         }
     }
 
